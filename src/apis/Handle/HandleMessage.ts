@@ -1,4 +1,5 @@
 import AxiosRequest from '@/utils/requests/index'
+//用户聊天系统
 
 export const getUserIdGroupList = (userId:number,page:number,pageSize:number)=>{
     return AxiosRequest.get(`/web/users/${userId}/groups`,{},{

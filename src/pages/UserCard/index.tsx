@@ -3,9 +3,8 @@ import { useNavigate} from 'react-router-dom';
 import {getUserProfile,SignOut} from '@/apis/UserSign'
 import {  useDispatch } from 'react-redux';
 import {setIsAdmin,setToken} from '@/store/reducers'
-import { Button, Modal } from 'antd';
+import { Modal } from 'antd';
 import {changePwd} from '@/apis/UserSign'
-import { log } from 'console';
 
 interface UserItemsProps{
     userId?:number,

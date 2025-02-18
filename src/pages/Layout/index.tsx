@@ -4,6 +4,7 @@ import items from '@/components/ModuleItems/MenuItems'
 import {  Layout, Menu, theme,  Drawer,Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import {UserCard} from '../UserCard'
+import { log } from 'console';
 
 const { Sider, Content,Header } = Layout;
 
@@ -23,8 +24,12 @@ const LayoutPage: React.FC = () => {
   };
 
   const handleMenuSelect = (e:any)=>{
-    // console.log(items[e.keyPath[1].slice(3)- 1]?.children[e.keyPath[0]-1].path);
-    Navigate(items[e.keyPath[1].slice(3)- 1]?.children[e.keyPath[0]-1].path)
+    // console.log(items[e.keyPath[0].slice(3) - 1].path);
+    console.log(e);   
+    e?.keyPath.length == 1 
+    ? Navigate(items[e.keyPath[0].slice(3)- 1].path) 
+    : Navigate(items[e.keyPath[1].slice(3)- 1]?.children[e.keyPath[0].slice(2)-1].path)
+    
   }
 
   return (
