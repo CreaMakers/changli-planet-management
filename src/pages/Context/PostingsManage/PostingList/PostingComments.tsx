@@ -124,14 +124,14 @@ export default function PostingComments(){
         if(keyword){
             const res = await searchComment(postId,pageObj.page,pageObj.pageSize,keyword)
             console.log("搜索指定评论",res);
-            if(res.data.code === `/^2\d{2}$/`){
+            if(/^2\d{2}$/.test(res.data.code)){
                 setPageObj(res.data?.data)
             }else{
                 console.log("查询出错",res.data.msg); 
             }
         }else{
             const res = await getPostingAllComments(postId,pageObj.page,pageObj.pageSize)
-            if(res.data.code === `/^2\d{2}$/`){
+            if(/^2\d{2}$/.test(res.data.code)){
                 setPageObj(res.data?.data)
             }else{
                 console.log("查询出错",res.data.msg); 
@@ -156,7 +156,7 @@ export default function PostingComments(){
         let commentId = e.currentTarget.parentNode.children[0].children[1].children[0].children[0].innerHTML
         const res = await delComment(postId,commentId)
         console.log("删除评论",res);
-        if(res.data.code === `/^2\d{2}$/`){
+        if(/^2\d{2}$/.test(res.data.code)){
             alert('删除成功')
             getComments()
         }else{

@@ -215,7 +215,7 @@ export default function PostingManage(){
     const updateProfiles = async (post_Id:any)=>{
         try{
             const res = await getPostingProfiles(post_Id)  
-            if(res.data.code === `/^2\d{2}$/`){
+            if(/^2\d{2}$/.test(res.data.code)){
                 // setNewData(res.data)
             }else{
                 console.log('查询出错',res.data.msg);

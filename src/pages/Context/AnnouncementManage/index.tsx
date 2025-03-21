@@ -11,36 +11,36 @@ const { Search } = Input;
 
 
 //测试用例(数据库更新数据后删)
-let exampleRes = {
-    "code": 200,
-    "msg": "success",
-    "data": [
-        {
-            "announcementId": 1001,
-            "groupId": 5,
-            "userId": 10086,
-            "title": "群规更新通知",
-            "content": "亲爱的群成员们,我们最近对群规进行了一些更新...",
-            "isPinned": true,
-            "createTime": "2023-04-15T10:30:00Z",
-            "updateTime": "2023-04-15T10:30:00Z",
-            "isDeleted": false,
-            "description": "关于群规的重要更新"
-          },
-          {
-            "announcementId": 1002,
-            "groupId": 5,
-            "userId": 10087,
-            "title": "周末活动安排",
-            "content": "本周末我们将举行线下聚会,具体安排如下...",
-            "isPinned": false,
-            "createTime": "2023-04-16T14:20:00Z",
-            "updateTime": "2023-04-16T14:20:00Z",
-            "isDeleted": false,
-            "description": "本周末的线下聚会安排"
-          }
-    ]
-}
+// let exampleRes = {
+//     "code": 200,
+//     "msg": "success",
+//     "data": [
+//         {
+//             "announcementId": 1001,
+//             "groupId": 5,
+//             "userId": 10086,
+//             "title": "群规更新通知",
+//             "content": "亲爱的群成员们,我们最近对群规进行了一些更新...",
+//             "isPinned": true,
+//             "createTime": "2023-04-15T10:30:00Z",
+//             "updateTime": "2023-04-15T10:30:00Z",
+//             "isDeleted": false,
+//             "description": "关于群规的重要更新"
+//           },
+//           {
+//             "announcementId": 1002,
+//             "groupId": 5,
+//             "userId": 10087,
+//             "title": "周末活动安排",
+//             "content": "本周末我们将举行线下聚会,具体安排如下...",
+//             "isPinned": false,
+//             "createTime": "2023-04-16T14:20:00Z",
+//             "updateTime": "2023-04-16T14:20:00Z",
+//             "isDeleted": false,
+//             "description": "本周末的线下聚会安排"
+//           }
+//     ]
+// }
   
 export default function AnnouncementList(){
 
@@ -111,18 +111,18 @@ export default function AnnouncementList(){
 
     const handleGetProfiles = async ()=>{
         const res = await getAllAnnouncementList(pageObj.page,pageObj.pageSize)
-        setNewData(exampleRes.data)//服务器有数据后改为res.data
+        setNewData(res?.data.data)//服务器有数据后改为res.data
     }
 
     useEffect(()=>{
         handleGetProfiles()
-    },[newdata,pageObj])
+    },[pageObj])
 
 
     const updateProfiles = async (announcementId:any)=>{
         try{
             const res = await getAnnouncementDetails(announcementId)  
-            if(res.data.code === `/^2\d{2}$/`){
+            if(/^2\d{2}$/.test(res.data.code)){
                 setNewData(res.data?.data)
             }else{
                 console.log('查询出错',res.data.msg);

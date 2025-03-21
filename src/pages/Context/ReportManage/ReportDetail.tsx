@@ -99,7 +99,7 @@ export default function ReportDetil(){
             violationTime:nowTime
         })
         const res = await handleUserReport(reportId,reasultItem)
-        if(res.data?.code === `/^2\d{2}$/`){
+        if(/^2\d{2}$/.test(res.data.code)){
             alert("处理成功")
         }else{
             console.log('查询出错',res.data.msg);

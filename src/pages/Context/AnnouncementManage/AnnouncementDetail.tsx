@@ -1,5 +1,5 @@
 import {getAnnouncementDetails,delAnnouncement,editCurrentAnnouncement} from '@/apis/Handle/HandleAnnounce.ts'
-import {useEffect,useState} from 'react'
+import {useEffect,useState,startTransition} from 'react'
 import {AnnouncementProps} from '@/utils/ModuleProps/AnnouncementProps.ts'
 import { Descriptions,Button,Modal } from 'antd';
 import type { DescriptionsProps, } from 'antd';
@@ -13,30 +13,29 @@ interface updatedDataProps {
 }
 
 //测试例子，服务器有数据后删
-let exampleRes = {
-    "announcementId": 1001,
-    "groupId": 5,
-    "userId": 10086,
-    "title": "群规更新通知",
-    "content": "亲爱的群成员们,我们最近对群规进行了一些更新...",
-    "isPinned": true,
-    "createTime": "2023-04-15T10:30:00Z",
-    "updateTime": "2023-04-15T10:30:00Z",
-    "isDeleted": false,
-    "description": "关于群规的重要更新"
-  }
+// let exampleRes = {
+//     "announcementId": 1001,
+//     "groupId": 5,
+//     "userId": 10086,
+//     "title": "群规更新通知",
+//     "content": "亲爱的群成员们,我们最近对群规进行了一些更新...",
+//     "isPinned": true,
+//     "createTime": "2023-04-15T10:30:00Z",
+//     "updateTime": "2023-04-15T10:30:00Z",
+//     "isDeleted": false,
+//     "description": "关于群规的重要更新"
+//   }
 
 export default function AnnouncementDetil(){
 
     
     const { announcementId } = useParams();
-    const [announcementItem,setAnnouncementItem] = useState<AnnouncementProps>(exampleRes)
+    const [announcementItem,setAnnouncementItem] = useState<AnnouncementProps>({})
     const [isEdit,setIsEdit] = useState<boolean>(false)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const Navigate = useNavigate()
     const isChildRoute = useMatch('/layout/announcementLists/:announcementId');
-    console.log("帖子详情",isChildRoute);
     
     const updateTitleDate = (text:any)=>{
         setAnnouncementItem({
@@ -83,7 +82,7 @@ export default function AnnouncementDetil(){
         {
             label: '被删除',
             span: 1,
-            children: announcementItem.isDeleted.toString() === 'true' ? "是" : "否",
+            children: announcementItem.isDeleted?.toString() === 'true' ? "是" : "否",
         },
         {
             label: '顶置',
@@ -93,7 +92,7 @@ export default function AnnouncementDetil(){
                 <option value={"true"}>是</option>
                 <option value={"false"} selected>否</option>
               </select> 
-            : <>{announcementItem.isPinned.toString() === 'true' ? "是" : "否"}</>,
+            : <>{announcementItem.isPinned?.toString() === 'true' ? "是" : "否"}</>,
             
         },
         {
@@ -123,10 +122,11 @@ export default function AnnouncementDetil(){
 
     const getCurrentPostingProfiles = async ()=>{
         const res = await getAnnouncementDetails(announcementId)
-        if(res.data.code === `/^2\d{2}$/`){
+        if(/^2\d{2}$/.test(res.data.code)){
             setAnnouncementItem(res.data.data)
+            console.log("sss");
         }else{
-            console.log(res.data.msg);
+            console.log("",res.data.msg);
         }
         console.log(res.data);
     }
@@ -143,7 +143,7 @@ export default function AnnouncementDetil(){
         try{
             const res = await delAnnouncement(announcementId)
             setIsModalOpen(false)
-            if(res.data.code === `/^2\d{2}$/`){
+            if(/^2\d{2}$/.test(res.data.code)){
                 Navigate('./layout/announcementLists')
             }else{
                 alert(res.data.msg)
@@ -168,6 +168,12 @@ export default function AnnouncementDetil(){
         setIsEdit(!isEdit)
     }
 
+    const handleBack = ()=>{
+        startTransition(()=>{
+            Navigate(`/layout/announcementLists`)
+        })
+    }
+
     useEffect(()=>{
         getCurrentPostingProfiles()
     },[])
@@ -187,6 +193,7 @@ export default function AnnouncementDetil(){
                                 <>
                                   <Button type="primary" onClick={handleEdit} style={{marginLeft:5,backgroundColor:"green"}}>{isEdit ? "结束编辑" : "编辑"}</Button>
                                   <Button type="primary" onClick={showModal} style={{marginLeft:5,backgroundColor:"red"}}>删除</Button>
+                                  <Button type="primary" onClick={handleBack} style={{marginLeft:5,backgroundColor:"blue"}}>返回</Button>
                                 </>
                             }
                             bordered

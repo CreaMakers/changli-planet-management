@@ -139,7 +139,7 @@ export default function DocumentList(){
 
     const deleteFile = async ()=>{
         const res = await delDocument(delFileId)
-        if(res.data.code === `/^2\d{2}$/`){
+        if(/^2\d{2}$/.test(res.data.code)){
             console.log("删除文件成功");
             updateProfiles()
         }else{
@@ -252,7 +252,7 @@ export default function DocumentList(){
 
     const updateProfiles = async ()=>{
         const res = await getAllDocuments(searchObj.page,searchObj.pageSize,searchObj.fileType)  
-        if(res.data.code === `/^2\d{2}$/`){
+        if(/^2\d{2}$/.test(res.data.code)){
             console.log("获取文件列表成功");
             setNewData(res.data.data)
         }else{

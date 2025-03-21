@@ -168,7 +168,7 @@ export default function ReportList(){
 
     const updateProfiles = async (reportId:any)=>{
             const res = await getAllReports(reportId)  
-            if(res.data.code === `/^2\d{2}$/`){
+            if(/^2\d{2}$/.test(res.data.code)){
                 setNewData(res.data?.data)
             }else{
                 console.log('查询出错',res.data.msg);

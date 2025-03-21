@@ -216,7 +216,7 @@ export default function ReportList(){
     const updateProfiles = async ()=>{
         try{
             const res = await getReportedPostingProfiles(pageObj.page,pageObj.pageSize)  
-            if(res.data.code === `/^2\d{2}$/`){
+            if(/^2\d{2}$/.test(res.data.code)){
                 console.log("获取举报列表成功");
 
                 // setNewData(res.data)
