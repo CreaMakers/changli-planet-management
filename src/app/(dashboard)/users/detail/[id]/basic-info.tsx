@@ -60,7 +60,15 @@ export const UserBasicInfo = ({
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">管理员</TableCell>
-              <TableCell>{userResp.isAdmin === 1 ? "是" : "否"}</TableCell>
+              <TableCell>
+                {userResp.isAdmin === 0
+                  ? "否"
+                  : userResp.isAdmin === 1
+                  ? "运营组"
+                  : userResp.isAdmin === 2
+                  ? "开发组"
+                  : "未知"}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">账号状态</TableCell>

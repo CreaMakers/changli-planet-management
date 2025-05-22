@@ -18,10 +18,12 @@ export const UserProfile = ({ userProfileResp }: UserProfileProps) => {
           <TableRow>
             <TableCell className="font-medium">性别</TableCell>
             <TableCell>
-              {userProfileResp.gender === 1
+              {userProfileResp.gender === 0
                 ? "男"
-                : userProfileResp.gender === 2
+                : userProfileResp.gender === 1
                 ? "女"
+                : userProfileResp.gender === 2
+                ? "其他"
                 : "未知"}
             </TableCell>
           </TableRow>

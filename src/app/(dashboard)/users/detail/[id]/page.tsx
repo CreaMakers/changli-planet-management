@@ -98,7 +98,10 @@ const UserInfoPage = ({ params }: { params: Promise<{ id: string }> }) => {
             </div>
             <div className="flex gap-2">
               {userResp.isAdmin === 1 && (
-                <Badge variant="secondary">管理员</Badge>
+                <Badge variant="secondary">运营组</Badge>
+              )}
+              {userResp.isAdmin === 2 && (
+                <Badge variant="outline">开发组</Badge>
               )}
               {userResp.isBanned && <Badge variant="destructive">已封禁</Badge>}
               {userResp.isDeleted && (

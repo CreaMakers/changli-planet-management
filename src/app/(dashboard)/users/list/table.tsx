@@ -69,11 +69,11 @@ export function UsersTable({
                     </span>
                     <span className="text-xs text-muted-foreground">
                       Lv.{user.userProfileResp.userLevel} ·{" "}
-                      {user.userProfileResp.gender === 1
+                      {user.userProfileResp.gender === 0
                         ? "男"
-                        : user.userProfileResp.gender === 2
+                        : user.userProfileResp.gender === 1
                         ? "女"
-                        : "未设置"}
+                        : "其他"}
                     </span>
                   </div>
                 </div>
