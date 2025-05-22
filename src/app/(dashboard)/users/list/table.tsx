@@ -115,12 +115,20 @@ export function UsersTable({
                 </div>
               </TableCell>
               <TableCell className="text-right">
-                <Link
-                  href={`/users/detail/${user.userResp.userId}`}
-                  className="text-sm font-medium text-primary underline-offset-4 hover:underline"
-                >
-                  查看详情
-                </Link>
+                <div className="flex justify-end gap-2">
+                  <Link
+                    href={`/users/detail/${user.userResp.userId}`}
+                    className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                  >
+                    查看详情
+                  </Link>
+                  <Link
+                    href={`/users/violations/${user.userResp.userId}`}
+                    className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                  >
+                    查看违规
+                  </Link>
+                </div>
               </TableCell>
             </TableRow>
           ))

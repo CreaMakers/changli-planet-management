@@ -12,6 +12,7 @@ import {
 import { useAuth } from "@/context/auth-context";
 import { apiRequest } from "@/lib/api";
 import { UserInfoResponse } from "@/types/user";
+import { AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -109,6 +110,12 @@ const UserInfoPage = ({ params }: { params: Promise<{ id: string }> }) => {
               </CardDescription>
             </div>
             <div className="flex gap-2">
+              <Button asChild variant="outline" size="sm" className="gap-2">
+                <Link href={`/users/violations/${userId}`}>
+                  <AlertTriangle className="h-4 w-4" />
+                  <span>违规记录</span>
+                </Link>
+              </Button>
               {userResp.isAdmin === 1 && (
                 <Badge variant="secondary">运营组</Badge>
               )}
