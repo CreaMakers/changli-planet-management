@@ -1,14 +1,13 @@
 "use client";
 
 import {
+  AlertTriangle,
   Bell,
-  File,
-  FileText,
+  ChevronRight,
   Flag,
+  FolderOpen,
   Megaphone,
-  MessageCircle,
   MessageSquare,
-  Shield,
   Users,
 } from "lucide-react";
 
@@ -30,7 +29,6 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -68,6 +66,10 @@ export const NavContent = () => {
           title: "用户详细",
           url: "/users/detail",
         },
+        {
+          title: "用户违规",
+          url: "/users/violations",
+        },
       ],
     },
     {
@@ -86,65 +88,49 @@ export const NavContent = () => {
       ],
     },
     {
-      title: "群聊管理",
-      url: "#",
-      icon: MessageCircle,
+      title: "违规管理",
+      url: "/violations",
+      icon: AlertTriangle,
       items: [
         {
-          title: "群聊列表",
-          url: "/group/list",
+          title: "违规列表",
+          url: "/violations/list",
+        },
+        {
+          title: "违规详细",
+          url: "/violations/detail",
         },
       ],
     },
     {
-      title: "聊天管理",
-      url: "/chat",
-      icon: MessageSquare,
-    },
-    {
       title: "帖子管理",
-      url: "#",
-      icon: FileText,
+      url: "/posts",
+      icon: MessageSquare,
       items: [
         {
-          title: "帖子处理",
-          url: "/post/manage",
+          title: "帖子列表",
+          url: "/posts/list",
         },
         {
-          title: "举报处理",
-          url: "/post/report",
+          title: "帖子详细",
+          url: "/posts/detail",
         },
       ],
     },
     {
       title: "文件管理",
-      url: "/file",
-      icon: File,
+      url: "/files",
+      icon: FolderOpen,
     },
     {
-      title: "通知管理",
-      url: "#",
-      icon: Bell,
-      items: [
-        {
-          title: "系统通知",
-          url: "/notification/system",
-        },
-        {
-          title: "用户通知",
-          url: "/notification/user",
-        },
-      ],
-    },
-    {
-      title: "举报反馈",
-      url: "/report",
+      title: "举报管理",
+      url: "/reports",
       icon: Flag,
     },
     {
-      title: "违规管理",
-      url: "/violation",
-      icon: Shield,
+      title: "发送通知",
+      url: "/notifications",
+      icon: Bell,
     },
   ];
 
