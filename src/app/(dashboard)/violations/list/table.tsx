@@ -120,16 +120,10 @@ export function ViolationsTable({
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
                     <Link
-                      href={`/violations/detail/${violation.id}`}
-                      className="text-sm font-medium text-primary underline-offset-4 hover:underline"
-                    >
-                      查看详情
-                    </Link>
-                    <Link
                       href={`/violations/detail/${violation.id}/edit`}
                       className="text-sm font-medium text-primary underline-offset-4 hover:underline"
                     >
-                      处理
+                      编辑
                     </Link>
                   </div>
                 </TableCell>
