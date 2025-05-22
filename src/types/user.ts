@@ -64,3 +64,15 @@ export interface UserLoginResponse extends BasicResponse {
     expires_in: string;
   };
 }
+
+export interface UsersCountResponse extends BasicResponse {
+  data: number;
+}
+
+export interface UsersInfoResponse extends BasicResponse {
+  data: {
+    userResp: UserResp;
+    userProfileResp: UserProfileResp;
+    userStatsResp: UserStatsResp;
+  }[];
+}

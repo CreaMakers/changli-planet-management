@@ -13,6 +13,7 @@ import {
 
 interface AuthContextType {
   userInfo: UserInfoResponse | null;
+  token: string | null;
   isLoading: boolean;
   login: (credential: { username: string; password: string }) => Promise<any>;
   fetchUser: () => Promise<void>;
@@ -92,6 +93,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const value = {
     userInfo,
+    token,
     isLoading,
     login,
     fetchUser,

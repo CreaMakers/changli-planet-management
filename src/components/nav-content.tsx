@@ -1,15 +1,15 @@
 "use client";
 
 import {
-  Users,
-  MessageCircle,
   Bell,
-  FileText,
   File,
-  Megaphone,
-  Shield,
-  MessageSquare,
+  FileText,
   Flag,
+  Megaphone,
+  MessageCircle,
+  MessageSquare,
+  Shield,
+  Users,
 } from "lucide-react";
 
 import {
@@ -39,16 +39,8 @@ export const NavContent = () => {
       icon: Users,
       items: [
         {
-          title: "用户基础信息",
-          url: "/user/basic",
-        },
-        {
-          title: "用户群聊信息",
-          url: "/user/group",
-        },
-        {
-          title: "用户帖子信息",
-          url: "/user/post",
+          title: "用户列表",
+          url: "/users",
         },
       ],
     },
