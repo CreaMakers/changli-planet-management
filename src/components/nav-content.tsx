@@ -40,7 +40,11 @@ export const NavContent = () => {
       items: [
         {
           title: "用户列表",
-          url: "/users",
+          url: "/users/list",
+        },
+        {
+          title: "用户详细",
+          url: "/users/detail",
         },
       ],
     },
