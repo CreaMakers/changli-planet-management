@@ -37,7 +37,7 @@ export const AppSidebar: React.FC = ({
                 />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">长理星球</span>
+                <span className="truncate font-semibold">长理星球后台</span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>

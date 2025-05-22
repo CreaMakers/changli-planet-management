@@ -71,6 +71,21 @@ export const NavContent = () => {
       ],
     },
     {
+      title: "公告管理",
+      url: "/announcements",
+      icon: Megaphone,
+      items: [
+        {
+          title: "公告列表",
+          url: "/announcements/list",
+        },
+        {
+          title: "公告详细",
+          url: "/announcements/detail",
+        },
+      ],
+    },
+    {
       title: "群聊管理",
       url: "#",
       icon: MessageCircle,
@@ -85,11 +100,6 @@ export const NavContent = () => {
       title: "聊天管理",
       url: "/chat",
       icon: MessageSquare,
-    },
-    {
-      title: "公告管理",
-      url: "/announcement",
-      icon: Megaphone,
     },
     {
       title: "帖子管理",

@@ -1,5 +1,6 @@
 "use client";
 
+import { CommonPagination } from "@/components/common-pagination";
 import {
   Card,
   CardContent,
@@ -14,7 +15,6 @@ import { UsersCountResponse, UsersInfoResponse } from "@/types/user";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { UserFilters } from "./filters";
-import { UserPagination } from "./pagination";
 import UsersPageSkeleton from "./skeleton";
 import { UsersTable } from "./table";
 
@@ -181,7 +181,7 @@ const UsersListPage = () => {
         </CardContent>
 
         <CardFooter className="flex flex-col items-center justify-between gap-4 border-t px-6 py-4">
-          <UserPagination
+          <CommonPagination
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChange}
