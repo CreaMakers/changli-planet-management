@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UsersInfoResponse } from "@/types/user";
+import Link from "next/link";
 
 interface UsersTableProps {
   users: UsersInfoResponse["data"];
@@ -114,12 +115,12 @@ export function UsersTable({
                 </div>
               </TableCell>
               <TableCell className="text-right">
-                <a
-                  href={`/user/${user.userResp.userId}`}
+                <Link
+                  href={`/users/${user.userResp.userId}`}
                   className="text-sm font-medium text-primary underline-offset-4 hover:underline"
                 >
                   查看详情
-                </a>
+                </Link>
               </TableCell>
             </TableRow>
           ))
