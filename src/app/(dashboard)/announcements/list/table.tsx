@@ -97,12 +97,20 @@ export function AnnouncementsTable({
                 </div>
               </TableCell>
               <TableCell className="text-right">
-                <Link
-                  href={`/announcements/detail/${announcement.announcementId}`}
-                  className="text-sm font-medium text-primary underline-offset-4 hover:underline"
-                >
-                  查看详情
-                </Link>
+                <div className="flex justify-end gap-2">
+                  <Link
+                    href={`/announcements/detail/${announcement.announcementId}`}
+                    className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                  >
+                    查看详情
+                  </Link>
+                  <Link
+                    href={`/announcements/detail/${announcement.announcementId}/edit`}
+                    className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                  >
+                    编辑
+                  </Link>
+                </div>
               </TableCell>
             </TableRow>
           ))
