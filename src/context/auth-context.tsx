@@ -23,22 +23,34 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userInfo, setUserInfo] = useState<UserInfoResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [token, setToken] = useState<string | null>(null);
 
-  const getToken = useCallback(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      return null;
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
     }
-    return token;
   }, []);
 
-  const setToken = useCallback((token: string) => {
+  const getToken = useCallback(() => {
+    if (token) {
+      return token;
+    }
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+      return storedToken;
+    }
+    return null;
+  }, [token]);
+
+  const saveToken = useCallback((token: string) => {
     localStorage.setItem("token", token);
   }, []);
 
   const fetchUser = useCallback(async () => {
-    const token = getToken();
-    if (!token) {
+    const currentToken = getToken();
+    if (!currentToken) {
       setIsLoading(false);
       return;
     }
@@ -46,7 +58,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const result = await apiRequest<UserInfoResponse>({
       method: "GET",
       path: "/web/users/me",
-      token,
+      token: currentToken,
     });
 
     if (result.success && result.data) {
@@ -66,7 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
 
       if (result.success && result.data) {
-        setToken(result.data.data.access_token);
+        saveToken(result.data.data.access_token);
       }
 
       return result;
