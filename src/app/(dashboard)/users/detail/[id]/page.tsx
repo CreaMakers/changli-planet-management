@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -11,6 +12,7 @@ import {
 import { useAuth } from "@/context/auth-context";
 import { apiRequest } from "@/lib/api";
 import { UserInfoResponse } from "@/types/user";
+import Link from "next/link";
 import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { UserBasicInfo } from "./basic-info";
@@ -59,8 +61,13 @@ const UserInfoPage = ({ params }: { params: Promise<{ id: string }> }) => {
     return (
       <div className="container mx-auto">
         <Card>
-          <CardContent>
-            <div className="text-center text-red-500">无效的用户ID</div>
+          <CardContent className="pt-6">
+            <div className="text-center mb-4">未找到用户信息</div>
+            <div className="flex justify-center">
+              <Button asChild>
+                <Link href="/users">返回用户列表</Link>
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -75,8 +82,13 @@ const UserInfoPage = ({ params }: { params: Promise<{ id: string }> }) => {
     return (
       <div className="container mx-auto">
         <Card>
-          <CardContent>
-            <div className="text-center">未找到用户信息</div>
+          <CardContent className="pt-6">
+            <div className="text-center mb-4">未找到用户信息</div>
+            <div className="flex justify-center">
+              <Button asChild>
+                <Link href="/users">返回用户列表</Link>
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
