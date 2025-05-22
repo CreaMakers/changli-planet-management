@@ -116,7 +116,7 @@ export function UsersTable({
               </TableCell>
               <TableCell className="text-right">
                 <Link
-                  href={`/users/${user.userResp.userId}`}
+                  href={`/users/detail/${user.userResp.userId}`}
                   className="text-sm font-medium text-primary underline-offset-4 hover:underline"
                 >
                   查看详情
