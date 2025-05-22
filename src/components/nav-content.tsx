@@ -29,13 +29,35 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const NavContent = () => {
+  const pathname = usePathname();
+
+  const isPathActive = (itemPath: string, exact: boolean = false) => {
+    if (exact) {
+      return pathname === itemPath;
+    }
+
+    if (itemPath !== "/" && pathname.startsWith(itemPath + "/")) {
+      return true;
+    }
+
+    return pathname === itemPath;
+  };
+
+  const hasActiveChild = (items: { url: string }[] | undefined) => {
+    if (!items) return false;
+    return items.some((subItem) => isPathActive(subItem.url));
+  };
+
   const navItems = [
     {
       title: "用户管理",
-      url: "#",
+      url: "/users",
       icon: Users,
       items: [
         {
@@ -127,10 +149,19 @@ export const NavContent = () => {
                 key={item.title}
                 asChild
                 className="group/collapsible"
+                defaultOpen={hasActiveChild(item.items)}
               >
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip={item.title}>
+                    <SidebarMenuButton
+                      tooltip={item.title}
+                      className={cn(
+                        isPathActive(item.url, true) &&
+                          !hasActiveChild(item.items)
+                          ? "bg-accent text-accent-foreground"
+                          : ""
+                      )}
+                    >
                       {item.icon && <item.icon />}
                       <span>{item.title}</span>
                       <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -140,10 +171,17 @@ export const NavContent = () => {
                     <SidebarMenuSub>
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
-                            <a href={subItem.url}>
+                          <SidebarMenuSubButton
+                            asChild
+                            className={cn(
+                              isPathActive(subItem.url)
+                                ? "bg-accent text-accent-foreground"
+                                : ""
+                            )}
+                          >
+                            <Link href={subItem.url}>
                               <span>{subItem.title}</span>
-                            </a>
+                            </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}
@@ -153,11 +191,19 @@ export const NavContent = () => {
               </Collapsible>
             ) : (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild tooltip={item.title}>
-                  <a href={item.url}>
+                <SidebarMenuButton
+                  asChild
+                  tooltip={item.title}
+                  className={cn(
+                    isPathActive(item.url)
+                      ? "bg-accent text-accent-foreground"
+                      : ""
+                  )}
+                >
+                  <Link href={item.url}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )
