@@ -9,7 +9,7 @@ import { apiRequest } from "@/lib/api";
 import { CommentResp, CommentsResponse } from "@/types/post";
 import { ChevronLeft, Search } from "lucide-react";
 import Link from "next/link";
-import { use, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { CommentItem } from "./comment-item";
 import { CommentsListSkeleton } from "./skeleton";
@@ -27,60 +27,60 @@ const CommentsPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const [totalCount, setTotalCount] = useState(20);
   const [totalPages, setTotalPages] = useState(1);
 
-  const fetchAndSetComments = async (
-    currentPage: number,
-    currentSearchKeyword: string
-  ) => {
-    if (!token || isNaN(postId)) return;
-    setIsLoading(true);
+  const fetchAndSetComments = useCallback(
+    async (currentPage: number, currentSearchKeyword: string) => {
+      if (!token || isNaN(postId)) return;
+      setIsLoading(true);
 
-    try {
-      let path: string;
-      const queryParams = `page=${currentPage}&limit=${limit}`;
+      try {
+        let path: string;
+        const queryParams = `page=${currentPage}&limit=${limit}`;
 
-      if (currentSearchKeyword) {
-        path = `/web/posts/${postId}/comments/search?keyword=${encodeURIComponent(
-          currentSearchKeyword
-        )}&${queryParams}`;
-      } else {
-        path = `/web/posts/${postId}/comments?${queryParams}`;
-      }
+        if (currentSearchKeyword) {
+          path = `/web/posts/${postId}/comments/search?keyword=${encodeURIComponent(
+            currentSearchKeyword
+          )}&${queryParams}`;
+        } else {
+          path = `/web/posts/${postId}/comments?${queryParams}`;
+        }
 
-      const response = await apiRequest<CommentsResponse>({
-        method: "GET",
-        path,
-        token,
-      });
+        const response = await apiRequest<CommentsResponse>({
+          method: "GET",
+          path,
+          token,
+        });
 
-      if (response.success && response.data) {
-        setComments(response.data.data);
-        setTotalPages(Math.ceil(totalCount / limit));
-      } else {
-        toast.error(
-          response.error ||
-            (currentSearchKeyword ? "搜索评论失败" : "获取评论失败")
+        if (response.success && response.data) {
+          setComments(response.data.data);
+          setTotalPages(Math.ceil(totalCount / limit));
+        } else {
+          toast.error(
+            response.error ||
+              (currentSearchKeyword ? "搜索评论失败" : "获取评论失败")
+          );
+          setComments([]);
+          setTotalPages(1);
+        }
+      } catch (error) {
+        console.error(
+          currentSearchKeyword ? "搜索评论错误:" : "获取评论错误:",
+          error
         );
+        toast.error(currentSearchKeyword ? "搜索评论失败" : "获取评论列表失败");
         setComments([]);
         setTotalPages(1);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error(
-        currentSearchKeyword ? "搜索评论错误:" : "获取评论错误:",
-        error
-      );
-      toast.error(currentSearchKeyword ? "搜索评论失败" : "获取评论列表失败");
-      setComments([]);
-      setTotalPages(1);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [token, postId, limit, totalCount]
+  );
 
   useEffect(() => {
     if (token && !isNaN(postId)) {
       fetchAndSetComments(page, searchKeyword);
     }
-  }, [postId, token, page, searchKeyword, limit, totalCount]);
+  }, [postId, token, page, searchKeyword, fetchAndSetComments]);
 
   const handleSearch = () => {
     setPage(1);

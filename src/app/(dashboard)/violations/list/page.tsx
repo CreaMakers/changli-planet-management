@@ -22,7 +22,7 @@ const ViolationsListPage = () => {
   const [violations, setViolations] = useState<ViolationsResponse["data"]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { token, isLoading: authLoading } = useAuth();
-  const [violationCount, setViolationCount] = useState<number>(20);
+  const [violationCount] = useState<number>(20);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);

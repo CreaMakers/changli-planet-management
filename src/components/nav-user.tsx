@@ -1,5 +1,6 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +23,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/context/auth-context";
 import {
-  BadgeCheck,
   ChevronsUpDown,
   Laptop,
   LogOut,
@@ -33,7 +33,6 @@ import {
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const NavUser = () => {
   const { userInfo, isLoading } = useAuth();

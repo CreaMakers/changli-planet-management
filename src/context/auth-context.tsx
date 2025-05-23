@@ -1,6 +1,6 @@
 "use client";
 
-import { apiRequest } from "@/lib/api";
+import { apiRequest, APIResponse } from "@/lib/api";
 import { UserInfoResponse, UserLoginResponse } from "@/types/user";
 import {
   createContext,
@@ -15,7 +15,10 @@ interface AuthContextType {
   userInfo: UserInfoResponse | null;
   token: string | null;
   isLoading: boolean;
-  login: (credential: { username: string; password: string }) => Promise<any>;
+  login: (credential: {
+    username: string;
+    password: string;
+  }) => Promise<APIResponse<UserLoginResponse>>;
   fetchUser: () => Promise<void>;
 }
 
@@ -84,7 +87,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       return result;
     },
-    []
+    [saveToken]
   );
 
   useEffect(() => {

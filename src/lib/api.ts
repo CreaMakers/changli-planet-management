@@ -8,7 +8,7 @@ interface APIRequestOptions {
   expectedStatus?: number[];
 }
 
-interface APIResponse<T = unknown> {
+export interface APIResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: string;

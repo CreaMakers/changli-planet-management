@@ -22,7 +22,7 @@ const PostsListPage = () => {
   const [posts, setPosts] = useState<PostsResponse["data"]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { token, isLoading: authLoading } = useAuth();
-  const [postCount, setPostCount] = useState<number>(20); // 暂时固定为20
+  const [postCount] = useState<number>(20); // 暂时固定为20
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);

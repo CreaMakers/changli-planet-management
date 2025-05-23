@@ -24,10 +24,6 @@ const UsersDetailPage = () => {
     }
   };
 
-  const handleNavigateToList = () => {
-    router.push("/users/list");
-  };
-
   return (
     <div className="container mx-auto">
       <Card className="w-full">

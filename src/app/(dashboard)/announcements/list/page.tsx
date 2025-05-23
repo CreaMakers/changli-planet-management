@@ -24,7 +24,7 @@ const AnnouncementsListPage = () => {
   >([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { token, isLoading: authLoading } = useAuth();
-  const [announcementCount, setAnnouncementCount] = useState<number>(20);
+  const [announcementCount] = useState<number>(20);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);

@@ -25,7 +25,6 @@ import { apiRequest } from "@/lib/api";
 import { ViolationResponse } from "@/types/violation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -71,7 +70,6 @@ const EditViolationPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const violationId = Number(id);
   const { token, isLoading: isAuthLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
 
   const form = useForm<ViolationFormValues>({
     resolver: zodResolver(formSchema),
@@ -147,7 +145,7 @@ const EditViolationPage = ({ params }: { params: Promise<{ id: string }> }) => {
       form.setValue("muteDuration", null);
       form.setValue("banDuration", null);
     }
-  }, [form.watch("penaltyType"), form]);
+  }, [watchPenaltyType, form]);
 
   const onSubmit = async (values: ViolationFormValues) => {
     if (!token || isNaN(violationId)) return;

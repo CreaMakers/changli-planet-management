@@ -24,10 +24,6 @@ const AnnouncementsDetailPage = () => {
     }
   };
 
-  const handleNavigateToList = () => {
-    router.push("/announcements/list");
-  };
-
   return (
     <div className="container mx-auto">
       <Card className="w-full">

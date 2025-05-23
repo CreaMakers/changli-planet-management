@@ -44,7 +44,7 @@ export const CommentItem = ({
     try {
       await onDeleteComment(comment.commentId);
       setDeleteDialogOpen(false);
-    } catch (error) {
+    } catch {
       setIsDeleting(false);
     }
   };
@@ -54,7 +54,7 @@ export const CommentItem = ({
     try {
       await onDeleteComment(replyId);
       setReplyDeleteDialogOpen(null);
-    } catch (error) {
+    } catch {
       setIsDeleting(false);
     }
   };
