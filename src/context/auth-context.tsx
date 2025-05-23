@@ -1,7 +1,12 @@
 "use client";
 
 import { apiRequest, APIResponse } from "@/lib/api";
-import { UserInfoResponse, UserLoginResponse } from "@/types/user";
+import {
+  ChangePasswordRequest,
+  ChangePasswordResponse,
+  UserInfoResponse,
+  UserLoginResponse,
+} from "@/types/user";
 import {
   createContext,
   ReactNode,
@@ -20,6 +25,9 @@ interface AuthContextType {
     password: string;
   }) => Promise<APIResponse<UserLoginResponse>>;
   fetchUser: () => Promise<void>;
+  changePassword: (
+    passwordData: ChangePasswordRequest
+  ) => Promise<APIResponse<ChangePasswordResponse>>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -90,6 +98,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     [saveToken]
   );
 
+  const changePassword = useCallback(
+    async (passwordData: ChangePasswordRequest) => {
+      const currentToken = getToken();
+      if (!currentToken) {
+        return {
+          success: false,
+          error: "未登录",
+          data: undefined,
+        } as APIResponse<ChangePasswordResponse>;
+      }
+
+      const result = await apiRequest<ChangePasswordResponse>({
+        method: "PUT",
+        path: "/web/users/me",
+        data: passwordData,
+        token: currentToken,
+      });
+
+      return result;
+    },
+    [getToken]
+  );
+
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
@@ -100,6 +131,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     isLoading,
     login,
     fetchUser,
+    changePassword,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

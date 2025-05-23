@@ -78,3 +78,14 @@ export interface UsersInfoResponse extends BasicResponse {
     userStatsResp: UserStatsResp; // 用户统计数据信息
   }[];
 }
+
+// 修改密码请求接口
+export interface ChangePasswordRequest {
+  old_password: string; // 旧密码
+  new_password: string; // 新密码
+}
+
+// 修改密码响应接口
+export interface ChangePasswordResponse extends BasicResponse {
+  data: null;
+}
