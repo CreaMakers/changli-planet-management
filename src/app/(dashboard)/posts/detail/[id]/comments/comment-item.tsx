@@ -1,3 +1,14 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -23,11 +34,26 @@ export const CommentItem = ({
   onDeleteComment,
 }: CommentItemProps) => {
   const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [replyDeleteDialogOpen, setReplyDeleteDialogOpen] = useState<
+    number | null
+  >(null);
 
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
       await onDeleteComment(comment.commentId);
+      setDeleteDialogOpen(false);
+    } catch (error) {
+      setIsDeleting(false);
+    }
+  };
+
+  const handleReplyDelete = async (replyId: number) => {
+    setIsDeleting(true);
+    try {
+      await onDeleteComment(replyId);
+      setReplyDeleteDialogOpen(null);
     } catch (error) {
       setIsDeleting(false);
     }
@@ -47,19 +73,39 @@ export const CommentItem = ({
               {new Date(comment.createTime).toLocaleString()}
             </CardDescription>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleDelete}
-            disabled={isDeleting}
-            aria-label="删除评论"
+          <AlertDialog
+            open={deleteDialogOpen}
+            onOpenChange={setDeleteDialogOpen}
           >
-            {isDeleting ? (
-              "删除中..."
-            ) : (
-              <Trash2 className="h-4 w-4 text-red-500" />
-            )}
-          </Button>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={isDeleting}
+                aria-label="删除评论"
+              >
+                {isDeleting ? (
+                  "删除中..."
+                ) : (
+                  <Trash2 className="h-4 w-4 text-red-500" />
+                )}
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>确认删除</AlertDialogTitle>
+                <AlertDialogDescription>
+                  您确定要删除这条评论吗？此操作无法撤销。
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>取消</AlertDialogCancel>
+                <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
+                  确认删除
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </CardHeader>
       <CardContent className="pt-0">
@@ -84,18 +130,41 @@ export const CommentItem = ({
                     {new Date(reply.createTime).toLocaleString()}
                   </span>
                 </p>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={async () => {
-                    await onDeleteComment(reply.commentId);
-                  }}
-                  disabled={isDeleting}
-                  className="h-6 w-6"
-                  aria-label="删除回复"
+                <AlertDialog
+                  open={replyDeleteDialogOpen === reply.commentId}
+                  onOpenChange={(open) =>
+                    setReplyDeleteDialogOpen(open ? reply.commentId : null)
+                  }
                 >
-                  <Trash2 className="h-3 w-3 text-red-500" />
-                </Button>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      disabled={isDeleting}
+                      className="h-6 w-6"
+                      aria-label="删除回复"
+                    >
+                      <Trash2 className="h-3 w-3 text-red-500" />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>确认删除</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        您确定要删除这条回复吗？此操作无法撤销。
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>取消</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => handleReplyDelete(reply.commentId)}
+                        disabled={isDeleting}
+                      >
+                        确认删除
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
               <p className="ml-5 mt-1">{reply.content}</p>
             </div>
